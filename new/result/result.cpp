@@ -19,6 +19,12 @@ result::result(std::function<bool(Cat, Cat)> func) {
 int result::size() const {
     return size_;
 }
+ Cat &result::operator[](int index) {
+     if (index >= size_ || index < 0) {
+         throw std::out_of_range("index out of range");
+     }
+     return cats_[index];
+ }
 
 
 

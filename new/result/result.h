@@ -20,7 +20,7 @@ public:
     [[nodiscard]]
     int size() const;
 
-    friend Cat& operator[](int index);
+     Cat& operator[](int index);
 
 private:
     std::mutex m_;
