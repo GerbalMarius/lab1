@@ -33,6 +33,7 @@ class Cat {
     friend std::ostream& operator <<(std::ostream& os, const Cat& cat);
     friend bool operator ==(const Cat& cat1, const Cat& cat2);
     friend bool operator !=(const Cat& cat1, const Cat& cat2);
+    friend bool operator <(const Cat& cat1, const Cat& cat2);
 
 
 private:
