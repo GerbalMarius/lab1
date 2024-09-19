@@ -23,7 +23,7 @@ public:
     int size() const;
 
     void add_if(const Cat& cat, const std::function<bool(Cat)>& pred);
-    void add_if(const Cat& cat) {
+    void add(const Cat& cat) {
         add_if(cat, [](const Cat& _) {return true;});
     }
 
