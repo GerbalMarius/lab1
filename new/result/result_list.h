@@ -40,7 +40,7 @@ private:
     std::function<bool(Cat, Cat)> cmp;
     int size_{};
 
-    int search_for_insert(const Cat& cat);
+    int search_for_insert(const Cat& cat) const;
 };
 
 

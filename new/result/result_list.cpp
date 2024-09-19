@@ -24,7 +24,6 @@ int result_list::size() const {
 void result_list::add_if(const Cat &cat, const std::function<bool(Cat)>& pred) {
     std::unique_lock lock(m_);
     if (!pred(cat)) {
-        lock.unlock();
         return;
     }
         int index = search_for_insert(cat);
@@ -62,8 +61,7 @@ result_list::const_iterator result_list::end() const {
     return cats_.begin() + size_;
 }
 
-int result_list::search_for_insert(const Cat &cat) {
-
+int result_list::search_for_insert(const Cat &cat) const {
     for(int i = 0; i < size_; i++) {
         if (!cmp(cat, cats_[i])) {
             return i;

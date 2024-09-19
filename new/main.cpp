@@ -24,7 +24,7 @@ int main() {
              Cat cat = monitor.remove();
              const auto hash_str = hasher::hash(cat.serialize());
              cat.setHash(hash_str);
-             results.add_if(cat);
+             results.add_if(cat, [](const Cat &c) {return c.getWeight() > 5;});
          }
      };
 
