@@ -48,10 +48,11 @@ namespace input_output {
         return ss.str();
     }
 
-    inline void write_result_txt(const result_list &results, const std::string &path) {
-        std::ofstream file(path);
+    template <typename list>
+    void write_result_txt(const list &results,  std::ofstream &file) {
+
         if (!file.is_open()) {
-            throw std::invalid_argument("Could not open file " + path);
+            throw std::invalid_argument("Could not open file ");
         }
 
         if (results.size() <= 0) {
@@ -74,8 +75,6 @@ namespace input_output {
             file << cat << '\n';
         }
         file << dashes << std::endl;
-
-        file.close();
     }
 }
 

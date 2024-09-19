@@ -3,6 +3,7 @@
 #include <vector>
 #include <thread>
 #include <ranges>
+#include <fstream>
 
 #include "hasher.h"
 #include "input_output.h"
@@ -41,9 +42,16 @@ int main() {
      }
      monitor.finish();
      std::ranges::for_each(threads, mem_fn(&std::thread::join));
-
-
-    input_output::write_result_txt(results, RESULT_FILE);
+     if (std::filesystem::exists(RESULT_FILE)) {
+         std::filesystem::remove(RESULT_FILE);
+     }
+     std::ofstream out(RESULT_FILE,  std::ios::app);
+     out << "Pradiniai duomenys:" << '\n';
+     input_output::write_result_txt(cats, out);
+     out << '\n';
+     out << "Po filtravimo ir rikiavimo:" << '\n';
+     input_output::write_result_txt(results, out);
+     out.close();
 
     return 0;
 }
