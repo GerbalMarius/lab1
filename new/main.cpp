@@ -42,6 +42,7 @@ int main() {
      monitor.finish();
      std::ranges::for_each(threads, mem_fn(&std::thread::join));
 
+
     input_output::write_result_txt(results, RESULT_FILE);
 
     return 0;

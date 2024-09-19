@@ -26,11 +26,13 @@ public:
     void add(const Cat& cat) {
         add_if(cat, [](const Cat& _) {return true;});
     }
+    void remove(const Cat& cat);
 
      Cat& operator[](int index);
      const  Cat& operator[](int index) const;
      iterator begin();
      iterator end();
+
 
     [[nodiscard]] const_iterator begin() const;
     [[nodiscard]] const_iterator end() const;
