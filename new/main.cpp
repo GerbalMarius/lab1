@@ -14,7 +14,7 @@ using std::size_t;
 const std::string FILE_NAME = "..\\cats.json";
 const std::string RESULT_FILE = "..\\result.txt";
 
-constexpr size_t NUM_THREADS = 3;
+constexpr size_t NUM_THREADS = 10;
 
 int main() {
     std::vector<Cat> cats = input_output::read_cats_json(FILE_NAME);
