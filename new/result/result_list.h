@@ -28,6 +28,7 @@ public:
     }
 
      Cat& operator[](int index);
+     const  Cat& operator[](int index) const;
      iterator begin();
      iterator end();
 
@@ -39,8 +40,6 @@ private:
     std::array<Cat, 30> cats_;
     std::function<bool(Cat, Cat)> cmp;
     int size_{};
-
-    int search_for_insert(const Cat& cat) const;
 };
 
 

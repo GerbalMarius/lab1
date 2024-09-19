@@ -1,22 +1,23 @@
 
 #include <iostream>
-#include <set>
 #include <vector>
 #include <thread>
-#include <set>
+#include <ranges>
 
 #include "hasher.h"
-#include "reader.h"
+#include "input_output.h"
 #include "cats/Cat.h"
 #include "monitor/monitor.h"
 #include "result/result_list.h"
 
+using std::size_t;
+const std::string FILE_NAME = "..\\cats.json";
+const std::string RESULT_FILE = "..\\result.txt";
 
-const std::string FILE_NAME = "cats.json";
-
+constexpr size_t NUM_THREADS = 3;
 
 int main() {
-    std::vector<Cat> cats = reader::read_cats_json(FILE_NAME);
+    std::vector<Cat> cats = input_output::read_cats_json(FILE_NAME);
     monitor monitor;
     result_list results;
     const auto remove_fn = [&monitor, &results] {
@@ -29,20 +30,19 @@ int main() {
      };
 
 
-     std::thread t1(remove_fn);
-     std::thread t2(remove_fn);
-
+    std::vector<std::thread> threads;
+    threads.reserve(NUM_THREADS);
+    for (size_t i = 0; i < NUM_THREADS; i++) {
+        threads.emplace_back(remove_fn);
+    }
 
      for (const auto &cat: cats) {
          monitor.add(cat);
      }
      monitor.finish();
-     t1.join();
-     t2.join();
-    for (const auto &result: results) {
-        std::cout << result << std::endl;
-    }
-    std::cout << monitor.size();
+     std::ranges::for_each(threads, mem_fn(&std::thread::join));
+
+    input_output::write_result_txt(results, RESULT_FILE);
 
     return 0;
 }

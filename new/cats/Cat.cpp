@@ -27,6 +27,10 @@ double Cat::getWeight() const {
     return weight_;
 }
 
+std::string Cat::getHash() const {
+    return hash_;
+}
+
 void Cat::setAge(const int age) {
     age_ = age;
 }
@@ -49,9 +53,9 @@ std::string Cat::serialize() const {
 
 
 std::ostream &operator <<(std::ostream &os, const Cat &cat) {
-    return os << "|" << std::setw(6) << cat.age_ << "|"
+    return os << "|" << std::right << std::setw(6) << cat.age_ << "|"
            << std::left << std::setw(16) << cat.name_ << "|"
-           << std::right << std::setw(6) << std::fixed << std::setprecision(2) << cat.weight_ << "|"
+           << std::right << std::setw(16) << std::fixed << std::setprecision(2) << cat.weight_ << "|"
            << cat.hash_ << "|";
 }
 

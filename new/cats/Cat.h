@@ -24,6 +24,9 @@ class Cat {
     [[nodiscard]]
     double getWeight()const;
 
+    [[nodiscard]]
+    std::string getHash() const;
+
     void setAge(int age);
     void setName(const std::string& name);
     void setWeight(double weight);

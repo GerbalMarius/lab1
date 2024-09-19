@@ -21,7 +21,7 @@ add_executable(new
         main.cpp
         cats/Cat.cpp
         cats/Cat.h
-        reader.h
+        input_output.h
         monitor/monitor.cpp
         monitor/monitor.h
         result/result_list.cpp
