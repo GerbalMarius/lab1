@@ -49,9 +49,7 @@ Cat monitor::remove() {
         return {};
     }
 
-    Cat last = cats_[--size_];
-    std::cout << last << std::endl;
-
+    Cat& last = cats_[--size_];
     cv_.notify_all();
     return last;
 }

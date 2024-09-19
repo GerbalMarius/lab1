@@ -33,7 +33,9 @@ class Cat {
     friend std::ostream& operator <<(std::ostream& os, const Cat& cat);
     friend bool operator ==(const Cat& cat1, const Cat& cat2);
     friend bool operator !=(const Cat& cat1, const Cat& cat2);
-    friend bool operator <(const Cat& cat1, const Cat& cat2);
+    friend bool operator >(const Cat& cat1, const Cat& cat2);
+
+    [[nodiscard]] std::string serialize() const;
 
 
 private:
@@ -41,7 +43,6 @@ private:
     std::string name_;
     double weight_{};
     std::string hash_;
-
 };
 
 
