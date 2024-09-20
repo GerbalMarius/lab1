@@ -10,12 +10,19 @@
 #include "cats/Cat.h"
 #include "monitor/monitor.h"
 #include "result/result_list.h"
+#include <omp.h>
+
+
 
 using std::size_t;
-const std::string FILE_NAME = "..\\cats.json";
-const std::string RESULT_FILE = "..\\result.txt";
+const std::string FILE_NAME = "cats.json";
+const std::string RESULT_FILE = "result.txt";
 
-constexpr size_t NUM_THREADS = 10;
+constexpr size_t NUM_THREADS = 5;
+
+namespace m {
+    std::mutex m;
+}
 
 int main() {
     std::vector<Cat> cats = input_output::read_cats_json(FILE_NAME);

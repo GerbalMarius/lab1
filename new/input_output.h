@@ -58,6 +58,7 @@ namespace input_output {
         if (results.size() <= 0) {
             file << "No cats present" << std::endl;
             file.close();
+            return;
         }
         const Cat& proxy = results[0];
 

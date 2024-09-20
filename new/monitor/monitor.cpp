@@ -13,6 +13,7 @@ monitor::monitor() = default;
 
 monitor::~monitor() = default;
 
+
 Cat &monitor::operator[](const int index) {
     if (index < 0 || index > size_) {
         throw std::out_of_range("index out of range");
