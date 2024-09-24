@@ -8,6 +8,7 @@
 #include <vector>
 #include <iomanip>
 #include <nlohmann/json.hpp>
+#include <sstream>
 
 #include "cats/Cat.h"
 #include "result/result_list.h"

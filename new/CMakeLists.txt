@@ -12,10 +12,10 @@ FetchContent_Declare(
         GIT_TAG v3.11.3
 )
 FetchContent_MakeAvailable(nlohmann_json)
+
 find_package(OpenSSL REQUIRED)
 
-
-# Add executable
+# Add executable first
 add_executable(new
         main.cpp
         cats/Cat.cpp
@@ -27,6 +27,24 @@ add_executable(new
         result/result_list.h
         hasher.h
 )
+
+# Platform-specific OpenMP integration
+if (MSVC)
+    # Enable OpenMP for Visual Studio
+    target_compile_options(new PRIVATE /openmp)
+elseif (APPLE)
+    # macOS: Find and link OpenMP
+    find_package(OpenMP REQUIRED)
+    if (OpenMP_FOUND)
+        target_link_libraries(new PRIVATE OpenMP::OpenMP_CXX)
+    endif()
+else()
+    # For other platforms (e.g., Linux, MinGW)
+    find_package(OpenMP REQUIRED)
+    if (OpenMP_FOUND)
+        target_link_libraries(new PRIVATE OpenMP::OpenMP_CXX)
+    endif()
+endif()
 
 # Link OpenMP libraries manually
 target_link_libraries(new
