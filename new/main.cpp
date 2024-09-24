@@ -10,7 +10,6 @@
 #include "cats/Cat.h"
 #include "monitor/monitor.h"
 #include "result/result_list.h"
-#include <omp.h>
 
 
 
