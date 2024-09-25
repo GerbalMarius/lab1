@@ -4,6 +4,9 @@
 #include <thread>
 #include <ranges>
 #include <fstream>
+#include <mutex>         // Include for std::mutex
+#include <filesystem>    // Include for std::filesystem
+#include <omp.h>
 
 #include "hasher.h"
 #include "input_output.h"
@@ -19,9 +22,7 @@ const std::string RESULT_FILE = "result.txt";
 
 constexpr size_t NUM_THREADS = 5;
 
-namespace m {
-    std::mutex m;
-}
+
 
 int main() {
     std::vector<Cat> cats = input_output::read_cats_json(FILE_NAME);
@@ -32,7 +33,7 @@ int main() {
              Cat cat = monitor.remove();
              const auto hash_str = hasher::hash(cat.serialize());
              cat.setHash(hash_str);
-             results.add_if(cat, [](const Cat &c) {return c.getWeight() > 5;});
+             results.add_if(cat, [](const Cat& c) { return c.getWeight() > 6; });
          }
      };
 
