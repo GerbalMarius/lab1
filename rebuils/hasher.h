@@ -21,7 +21,7 @@ namespace hasher {
         SHA256(reinterpret_cast<const unsigned char *>(serialized_str.c_str()), serialized_str.length(), hash);
 
         std::stringstream ss;
-        for (unsigned char ch : hash) {
+        for (const auto& ch : hash) {
             ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(ch);
         }
         return ss.str();
