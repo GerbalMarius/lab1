@@ -1,4 +1,6 @@
 //
+// Created by Marius Ambrazevičius on 27/09/2024.
+//
 // Created by marius on 2024-09-11.
 //
 
@@ -10,7 +12,7 @@
 
 class Cat {
 
-    public:
+public:
     Cat();
     Cat(int age, std::string name, double weight);
     ~Cat() = default;

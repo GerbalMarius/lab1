@@ -1,10 +1,7 @@
 cmake_minimum_required(VERSION 3.29)
-project(new)
+project(rebuils)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
 include(FetchContent)
 
 # Fetch nlohmann_json
@@ -14,41 +11,28 @@ FetchContent_Declare(
         GIT_TAG v3.11.3
 )
 FetchContent_MakeAvailable(nlohmann_json)
-
 find_package(OpenSSL REQUIRED)
 
-# Add executable first
-add_executable(new
-        main.cpp
-        cats/Cat.cpp
-        cats/Cat.h
+add_executable(rebuils main.cpp
+        cat/Cat.cpp
+        cat/Cat.h
+        hasher.h
         input_output.h
         monitor/monitor.cpp
         monitor/monitor.h
         result/result_list.cpp
-        result/result_list.h
-        hasher.h
-)
-
+        result/result_list.h)
 # Platform-specific OpenMP integration
 if(MSVC)
     # Enable OpenMP for Visual Studio
-    target_compile_options(new PRIVATE /openmp)
-elseif(APPLE)
-    # Homebrew-installed LLVM on macOS (for OpenMP support)
-    set(CMAKE_C_COMPILER /opt/homebrew/opt/llvm/bin/clang)
-    set(CMAKE_CXX_COMPILER /opt/homebrew/opt/llvm/bin/clang++)
-
-else()
-    # For Linux or other platforms, find OpenMP
+    target_compile_options(rebuils PRIVATE /openmp)
+else ()
     find_package(OpenMP REQUIRED)
-    if(OpenMP_FOUND)
-        target_link_libraries(new PRIVATE OpenMP::OpenMP_CXX)
-    endif()
-endif()
+    target_link_libraries(rebuils PRIVATE OpenMP::OpenMP_CXX)
+endif ()
 
 # Link OpenMP libraries manually
-target_link_libraries(new
+target_link_libraries(rebuils
         PRIVATE
         nlohmann_json::nlohmann_json
         OpenSSL::SSL

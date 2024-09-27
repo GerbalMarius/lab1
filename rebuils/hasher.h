@@ -1,3 +1,4 @@
+
 //
 // Created by marius on 2024-09-12.
 //
@@ -10,7 +11,6 @@
 #include <sstream>
 #include <string>
 #include <openssl/sha.h>
-#include "cats/Cat.h"
 
 namespace hasher {
 

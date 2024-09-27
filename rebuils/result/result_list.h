@@ -1,3 +1,4 @@
+
 //
 // Created by marius on 2024-09-12.
 //
@@ -7,7 +8,7 @@
 #include <mutex>
 #include <functional>
 
-#include "../cats/Cat.h"
+#include "../cat/Cat.h"
 
 
 class result_list {
@@ -28,10 +29,10 @@ public:
     }
     void remove(const Cat& cat);
 
-     Cat& operator[](int index);
-     const  Cat& operator[](int index) const;
-     iterator begin();
-     iterator end();
+    Cat& operator[](int index);
+    const  Cat& operator[](int index) const;
+    iterator begin();
+    iterator end();
 
 
     [[nodiscard]] const_iterator begin() const;

@@ -5,7 +5,6 @@
 #include "Cat.h"
 
 #include <format>
-#include <utility>
 #include  <cmath>
 #include <iomanip>
 #include <ios>
@@ -70,4 +69,3 @@ bool operator >(const Cat &cat1, const Cat &cat2) {
     int result = cat1.name_.compare(cat2.name_);
     return result > 0;
 }
-

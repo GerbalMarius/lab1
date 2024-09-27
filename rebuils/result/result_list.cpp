@@ -1,3 +1,4 @@
+
 //
 // Created by marius on 2024-09-12.
 //
@@ -26,15 +27,15 @@ void result_list::add_if(const Cat &cat, const std::function<bool(Cat)>& pred) {
     if (!pred(cat)) {
         return;
     }
-        if (size_ >= cats_.max_size()) {
-            throw std::overflow_error("result list is full");
-        }
-        int i;
-        for(i = size_ - 1; i >= 0 && cmp(cats_[i], cat); i--) {
-            cats_[i + 1] = cats_[i];
-        }
-        cats_[i + 1] = cat;
-        size_++;
+    if (size_ >= cats_.max_size()) {
+        throw std::overflow_error("result list is full");
+    }
+    int i;
+    for(i = size_ - 1; i >= 0 && cmp(cats_[i], cat); i--) {
+        cats_[i + 1] = cats_[i];
+    }
+    cats_[i + 1] = cat;
+    size_++;
 
 }
 
@@ -49,11 +50,11 @@ void result_list::remove(const Cat &cat) {
 }
 
 Cat &result_list::operator[](int index) {
-     if (index >= size_ || index < 0) {
-         throw std::out_of_range("index out of range");
-     }
-     return cats_[index];
- }
+    if (index >= size_ || index < 0) {
+        throw std::out_of_range("index out of range");
+    }
+    return cats_[index];
+}
 const Cat &result_list::operator[](int index) const {
     if (index >= size_ || index < 0) {
         throw std::out_of_range("index out of range");
@@ -74,6 +75,3 @@ result_list::const_iterator result_list::begin() const {
 result_list::const_iterator result_list::end() const {
     return cats_.begin() + size_;
 }
-
-
-

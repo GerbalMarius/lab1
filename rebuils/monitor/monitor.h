@@ -1,3 +1,4 @@
+
 //
 // Created by marius on 2024-09-11.
 //
@@ -8,7 +9,7 @@
 #include <condition_variable>
 #include <mutex>
 
-#include "../cats/Cat.h"
+#include "../cat/Cat.h"
 
 
 class monitor {

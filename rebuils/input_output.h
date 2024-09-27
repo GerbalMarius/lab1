@@ -1,17 +1,18 @@
 //
-// Created by marius on 2024-09-11.
+// Created by Marius Ambrazevičius on 27/09/2024.
 //
 
-#ifndef READER_H
-#define READER_H
+#ifndef INPUT_OUTPUT_H
+#define INPUT_OUTPUT_H
+
+
 #include <fstream>
 #include <vector>
 #include <iomanip>
 #include <nlohmann/json.hpp>
 #include <sstream>
 
-#include "cats/Cat.h"
-#include "result/result_list.h"
+#include "cat/Cat.h"
 
 namespace input_output {
     inline std::vector<Cat> read_cats_json(const std::string& jsonFile) {
@@ -80,4 +81,4 @@ namespace input_output {
     }
 }
 
-#endif //READER_H
+#endif //INPUT_OUTPUT_H

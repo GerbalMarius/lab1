@@ -1,3 +1,4 @@
+
 //
 // Created by marius on 2024-09-11.
 //
@@ -14,7 +15,7 @@ monitor::monitor() = default;
 monitor::~monitor() = default;
 
 
-Cat &monitor::operator[](const int index) {
+Cat &monitor::operator[](const int index)  {
     if (index < 0 || index > size_) {
         throw std::out_of_range("index out of range");
     }
