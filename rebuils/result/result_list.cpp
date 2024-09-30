@@ -42,12 +42,16 @@ void result_list::add_if(const Cat &cat, const std::function<bool(Cat)>& pred) {
 }
 
 void result_list::remove(const Cat &cat) {
+
         if (size_ == 0) {
             return;
         }
-        auto newEnd = std::remove(begin(), end(), cat);//find new end of collection after removal of cat
-        size_ = static_cast<int>(std::distance(begin(), newEnd));// recalculate the size
-        std::fill(newEnd, end(), Cat());//fill the unused parts with default values
+#pragma omp critical
+    {
+            auto newEnd = std::remove(begin(), end(), cat);//find new end of collection after removal of cat
+            size_ = static_cast<int>(std::distance(begin(), newEnd));// recalculate the size
+            std::fill(newEnd, end(), Cat());//fill the unused parts with default values
+    }
 }
 
 Cat &result_list::operator[](int index) {
