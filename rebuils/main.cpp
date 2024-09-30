@@ -12,7 +12,6 @@
 #include "hasher.h"
 #include "input_output.h"
 #include "cat/Cat.h"
-#include "monitor/monitor.h"
 #include "result/result_list.h"
 
 
@@ -27,29 +26,10 @@ constexpr size_t NUM_THREADS = 5;
 
 int main() {
     std::vector<Cat> cats = input_output::read_cats_json(FILE_NAME);
-    monitor monitor;
     result_list results;
-    const auto remove_fn = [&monitor, &results] {
-        while (monitor.size() > 0 || !monitor.isFinished()) {
-            Cat cat = monitor.remove();
-            const auto hash_str = hasher::hash(cat.serialize());
-            cat.setHash(hash_str);
-            results.add_if(cat, [](const Cat& c) { return c.getWeight() > 6; });
-        }
-    };
 
 
-    std::vector<std::thread> threads;
-    threads.reserve(NUM_THREADS);
-    for (size_t i = 0; i < NUM_THREADS; i++) {
-        threads.emplace_back(remove_fn);
-    }
 
-    for (const auto &cat: cats) {
-        monitor.add(cat);
-    }
-    monitor.finish();
-    std::ranges::for_each(threads, mem_fn(&std::thread::join));
     if (std::filesystem::exists(RESULT_FILE)) {
         std::filesystem::remove(RESULT_FILE);
     }
