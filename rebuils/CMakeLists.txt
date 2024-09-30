@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.29)
 project(rebuils)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
 include(FetchContent)
 
 # Fetch nlohmann_json

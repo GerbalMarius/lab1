@@ -23,30 +23,31 @@ int result_list::size() const {
 }
 
 void result_list::add_if(const Cat &cat, const std::function<bool(Cat)>& pred) {
-    std::unique_lock lock(m_);
     if (!pred(cat)) {
         return;
     }
-    if (size_ >= cats_.max_size()) {
-        throw std::overflow_error("result list is full");
+#pragma omp critical
+    {
+        if (size_ >= cats_.max_size()) {
+            throw std::overflow_error("result list is full");
+        }
+        int i;
+        for(i = size_ - 1; i >= 0 && cmp(cats_[i], cat); i--) {
+            cats_[i + 1] = cats_[i];
+        }
+        cats_[i + 1] = cat;
+        size_++;
     }
-    int i;
-    for(i = size_ - 1; i >= 0 && cmp(cats_[i], cat); i--) {
-        cats_[i + 1] = cats_[i];
-    }
-    cats_[i + 1] = cat;
-    size_++;
 
 }
 
 void result_list::remove(const Cat &cat) {
-    std::unique_lock lock(m_);
-    if (size_ == 0) {
-        return;
-    }
-    auto newEnd = std::remove(begin(), end(), cat);//find new end of collection after removal of cat
-    size_ = static_cast<int>(std::distance(begin(), newEnd));// recalculate the size
-    std::fill(newEnd, end(), Cat());//fill the unused parts with default values
+        if (size_ == 0) {
+            return;
+        }
+        auto newEnd = std::remove(begin(), end(), cat);//find new end of collection after removal of cat
+        size_ = static_cast<int>(std::distance(begin(), newEnd));// recalculate the size
+        std::fill(newEnd, end(), Cat());//fill the unused parts with default values
 }
 
 Cat &result_list::operator[](int index) {

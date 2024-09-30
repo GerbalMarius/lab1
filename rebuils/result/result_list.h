@@ -39,7 +39,6 @@ public:
     [[nodiscard]] const_iterator end() const;
 
 private:
-    std::mutex m_;
     std::array<Cat, 30> cats_;
     std::function<bool(Cat, Cat)> cmp;
     int size_{};
