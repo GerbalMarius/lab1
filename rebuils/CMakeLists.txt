@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.29)
 project(rebuils)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
 include(FetchContent)
 
 # Fetch nlohmann_json
@@ -24,6 +23,7 @@ add_executable(rebuils main.cpp
 # Platform-specific OpenMP integration
 if(MSVC)
     # Enable OpenMP for Visual Studio
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
     set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
 else ()
     find_package(OpenMP REQUIRED)

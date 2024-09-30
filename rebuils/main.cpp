@@ -16,15 +16,16 @@
 
 
 
-using std::size_t;
+
 const std::string FILE_NAME = "cats.json";
 const std::string RESULT_FILE = "result.txt";
 
-constexpr size_t NUM_THREADS = 5;
+constexpr std::size_t NUM_THREADS = 5;
 
 
 
 int main() {
+    std::cout << omp_get_num_threads() << std::endl;
     std::vector<Cat> cats = input_output::read_cats_json(FILE_NAME);
     result_list results;
 
