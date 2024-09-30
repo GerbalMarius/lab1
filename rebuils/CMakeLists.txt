@@ -26,6 +26,7 @@ add_executable(rebuils main.cpp
 if(MSVC)
     # Enable OpenMP for Visual Studio
     target_compile_options(rebuils PRIVATE /openmp)
+    set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
 else ()
     find_package(OpenMP REQUIRED)
     target_link_libraries(rebuils PRIVATE OpenMP::OpenMP_CXX)
