@@ -19,13 +19,13 @@ add_executable(rebuils main.cpp
         cat/Cat.h
         hasher.h
         input_output.h
-        result/result_list.cpp
-        result/result_list.h)
+        result/fixed_sorted_list.cpp
+        result/fixed_sorted_list.h
+        thread_utils.h)
 # Platform-specific OpenMP integration
 if(MSVC)
     # Enable OpenMP for Visual Studio
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
-    set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
 else ()
     find_package(OpenMP REQUIRED)
     target_link_libraries(rebuils PRIVATE OpenMP::OpenMP_CXX)

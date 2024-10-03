@@ -3,26 +3,26 @@
 // Created by marius on 2024-09-12.
 //
 
-#include "result_list.h"
+#include "fixed_sorted_list.h"
 
 #include <utility>
 #include <functional>
 #include <stdexcept>
 
-result_list::result_list() {
+fixed_sorted_list::fixed_sorted_list() {
     cmp = [](const Cat& r1, const Cat & r2) {
         return r1 > r2;
     };
 }
-result_list::~result_list() = default;
-result_list::result_list(std::function<bool(Cat, Cat)> func) {
+fixed_sorted_list::~fixed_sorted_list() = default;
+fixed_sorted_list::fixed_sorted_list(std::function<bool(Cat, Cat)> func) {
     cmp = std::move(func);
 }
-int result_list::size() const {
+int fixed_sorted_list::size() const {
     return size_;
 }
 
-void result_list::add_if(const Cat &cat, const std::function<bool(Cat)>& pred) {
+void fixed_sorted_list::add_if(const Cat &cat, const std::function<bool(Cat)>& pred) {
     if (!pred(cat)) {
         return;
     }
@@ -41,7 +41,7 @@ void result_list::add_if(const Cat &cat, const std::function<bool(Cat)>& pred) {
 
 }
 
-void result_list::remove(const Cat &cat) {
+void fixed_sorted_list::remove(const Cat &cat) {
 
         if (size_ == 0) {
             return;
@@ -54,29 +54,29 @@ void result_list::remove(const Cat &cat) {
     }
 }
 
-Cat &result_list::operator[](int index) {
+Cat &fixed_sorted_list::operator[](int index) {
     if (index >= size_ || index < 0) {
         throw std::out_of_range("index out of range");
     }
     return cats_[index];
 }
-const Cat &result_list::operator[](int index) const {
+const Cat &fixed_sorted_list::operator[](int index) const {
     if (index >= size_ || index < 0) {
         throw std::out_of_range("index out of range");
     }
     return cats_[index];
 }
 
-result_list::iterator result_list::begin() {
+fixed_sorted_list::iterator fixed_sorted_list::begin() {
     return cats_.begin();
 }
-result_list::iterator result_list::end() {
+fixed_sorted_list::iterator fixed_sorted_list::end() {
     return cats_.begin() + size_;
 }
 
-result_list::const_iterator result_list::begin() const {
+fixed_sorted_list::const_iterator fixed_sorted_list::begin() const {
     return cats_.begin();
 }
-result_list::const_iterator result_list::end() const {
+fixed_sorted_list::const_iterator fixed_sorted_list::end() const {
     return cats_.begin() + size_;
 }

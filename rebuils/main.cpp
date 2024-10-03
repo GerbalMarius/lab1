@@ -8,21 +8,22 @@
 
 #include "hasher.h"
 #include "input_output.h"
+#include "thread_utils.h"
 #include "cat/Cat.h"
-#include "result/result_list.h"
+#include "result/fixed_sorted_list.h"
 
 
-void calculate_results(const std::vector<Cat> &cats, result_list &results, int &sum_ints, double &sum_doubles);
+void calculate_results(const std::vector<Cat> &cats, fixed_sorted_list &results, int &sum_ints, double &sum_doubles);
 
 const std::string FILE_NAME = "cats.json";
 const std::string RESULT_FILE = "result.txt";
 
-constexpr std::size_t NUM_THREADS = 6;
+constexpr std::size_t NUM_THREADS = 8;
 
 
 int main() {
-    std::vector<Cat> cats = input_output::read_cats_json(FILE_NAME);
-    result_list results;
+    const std::vector<Cat> cats = input_output::read_cats_json(FILE_NAME);
+    fixed_sorted_list results;
 
     int age_sum = 0;
     double weight_sum = 0;
@@ -46,7 +47,7 @@ int main() {
     return 0;
 }
 
-void calculate_results(const std::vector<Cat> &cats, result_list &results, int &sum_ints, double &sum_doubles) {
+void calculate_results(const std::vector<Cat> &cats, fixed_sorted_list &results, int &sum_ints, double &sum_doubles) {
 
     if (cats.empty() || NUM_THREADS < 1) {
         return;
@@ -65,23 +66,11 @@ void calculate_results(const std::vector<Cat> &cats, result_list &results, int &
         int start_index;
         int end_index;
 
-        if (thread_id < remainder) {
-            //first remainder threads calculate the extra element
-            start_index = thread_id * (base_count + 1);
-            end_index = start_index + (base_count + 1);
-        } else {
-            //other threads calculate the base
-            start_index = thread_id * (base_count) + remainder;
-            end_index = start_index + (base_count);
-        }
-        //if remainder is zero we can evenly split the tasks across threads by the divisor
-        if (remainder == 0) {
-            start_index = thread_id * (cats.size() / NUM_THREADS);
-            end_index = start_index + (cats.size() / NUM_THREADS);
-        }
+        thread_utils::calculate_indexes(cats.size(), NUM_THREADS, thread_id, start_index, end_index, base_count, remainder);
 
-       // #pragma omp critical
-        //      std::cout << "Thread #" << thread_id << ":" << end_index - start_index << " number of elements" <<  '\n';
+
+         #pragma omp critical
+              std::cout << "Thread #" << thread_id << ":" << end_index - start_index << " number of elements" <<  '\n';
         for (std::size_t i = start_index; i < end_index; i++) {
             Cat cat = cats[i];
             const std::string hash = hasher::hash(cat.serialize());

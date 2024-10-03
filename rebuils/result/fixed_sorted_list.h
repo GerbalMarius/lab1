@@ -11,14 +11,14 @@
 #include "../cat/Cat.h"
 
 
-class result_list {
+class fixed_sorted_list {
 public:
     using iterator = std::array<Cat, 30>::iterator;
     using const_iterator = std::array<Cat, 30>::const_iterator;
 
-    result_list();
-    ~result_list();
-    explicit result_list(std::function<bool(Cat, Cat)> func);
+    fixed_sorted_list();
+    ~fixed_sorted_list();
+    explicit fixed_sorted_list(std::function<bool(Cat, Cat)> func);
 
     [[nodiscard]]
     int size() const;
