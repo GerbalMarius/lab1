@@ -31,6 +31,11 @@ bool monitor::isFinished() const {
     return finished_;
 }
 
+void monitor::finish() {
+    std::unique_lock lock(mutex_);
+    finished_ = true;
+}
+
 
 void monitor::add(const Cat &cat) {
     std::unique_lock lock(mutex_);

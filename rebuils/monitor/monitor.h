@@ -30,9 +30,7 @@ public:
     [[nodiscard]]
     bool isFinished() const;
 
-    void finish() {
-        finished_ = true;
-    }
+    void finish();
 
 private:
     std::array<Cat, 10> cats_;
