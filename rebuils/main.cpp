@@ -26,13 +26,14 @@ constexpr size_t NUM_THREADS = 5;
 
 
 int main() {
-    std::vector<Cat> cats = input_output::read_cats_json(FILE_NAME);
+    const std::vector<Cat> cats = input_output::read_cats_json(FILE_NAME);
     monitor monitor;
     result_list results;
-    const auto remove_fn = [&monitor, &results] {
-        while (monitor.size() > 0 || !monitor.isFinished()) {
-
+    int items_removed = 0;
+    const auto remove_fn = [&monitor, &results, &items_removed, &cats] {
+        while (items_removed < cats.size()) {
             Cat cat = monitor.remove();
+            items_removed++;
             const auto hash_str = hasher::hash(cat.serialize());
             cat.setHash(hash_str);
             results.add_if(cat, [](const Cat& c) { return  true; });
