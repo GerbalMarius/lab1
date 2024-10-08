@@ -31,10 +31,11 @@ int main() {
     result_list results;
     const auto remove_fn = [&monitor, &results] {
         while (monitor.size() > 0 || !monitor.isFinished()) {
+
             Cat cat = monitor.remove();
             const auto hash_str = hasher::hash(cat.serialize());
             cat.setHash(hash_str);
-            results.add_if(cat, [](const Cat& c) { return c.getWeight() > 6; });
+            results.add_if(cat, [](const Cat& c) { return  true; });
         }
     };
 

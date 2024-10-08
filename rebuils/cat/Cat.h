@@ -16,6 +16,7 @@ public:
     Cat();
     Cat(int age, std::string name, double weight);
     ~Cat() = default;
+    static const Cat EMPTY;
 
     [[nodiscard]]
     int getAge() const;

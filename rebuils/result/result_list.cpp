@@ -24,7 +24,7 @@ int result_list::size() const {
 
 void result_list::add_if(const Cat &cat, const std::function<bool(Cat)>& pred) {
     std::unique_lock lock(m_);
-    if (!pred(cat)) {
+    if (!pred(cat) || cat == Cat::EMPTY) {
         return;
     }
     if (size_ >= cats_.max_size()) {

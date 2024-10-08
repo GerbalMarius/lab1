@@ -32,7 +32,6 @@ bool monitor::isFinished() const {
 }
 
 void monitor::finish() {
-    std::unique_lock lock(mutex_);
     finished_ = true;
 }
 
@@ -51,9 +50,9 @@ Cat monitor::remove() {
 
     cv_.wait(lock, [&] { return size_ > 0 || finished_; });
 
-    if (size_ == 0 && finished_) {
+    if (size_ <= 0 && finished_) {
         cv_.notify_all();
-        return {};
+        return Cat::EMPTY;
     }
 
     Cat& last = cats_[--size_];

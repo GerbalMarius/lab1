@@ -11,6 +11,8 @@
 
 Cat::Cat() = default;
 
+const Cat Cat::EMPTY = Cat();
+
 Cat::Cat(const int age, std::string name, const double weight): age_(age), name_(std::move(name)), weight_(weight) {
 }
 
